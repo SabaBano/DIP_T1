@@ -3,21 +3,20 @@ import re
 import numpy as np
 from PIL import Image
 print("Shannon Image Compression Program")
-print("=================================================================")
 import collections
-h = int(input("Enter 1 if you want to input an colour image file, 2 for default gray scale case:"))
-if h == 1:
+h = input("Enter photo if you want to input an colour image file, gray for default gray scale case:")
+if h == "photo":
     file = input("Enter the filename:")
     my_string = np.asarray(Image.open(file),np.uint8)
-    sudhi = my_string
+    saba = my_string
     shape = my_string.shape
     print ("Enetered string is:",my_string)
     message = str(my_string.tolist())
-elif h == 2:
+elif h == "gray":
     array = np.arange(0, 737280, 1, np.uint8)
     my_string = np.reshape(array, (1024, 720))
     print ("Enetered string is:",my_string)
-    sudhi = my_string
+    saba = my_string
     message = str(my_string.tolist())
 else:
     print("You entered invalid input")                        #taking input from user
@@ -109,7 +108,7 @@ if h == 1:
     print("Output image dimensions:",res.shape)
     data = Image.fromarray(res)
     data.save('uncompressed.png')
-    if sudhi.all() == res.all():
+    if saba.all() == res.all():
         print("Success")
 if h == 2:
     temp = re.findall(r'\d+', uncompressed_string)
