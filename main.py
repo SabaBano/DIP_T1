@@ -1,36 +1,23 @@
-from matplotlib.image import imread                                    # importing matplotlib library for image reading
-import matplotlib.pyplot as plt                                        # importing matplotlib library for plotting
-import numpy as np                                                     # import numpy library for arrays
-import cv2                                                             # opencv files
-from PIL import Image                                                  # for importing image
-from numpy import asarray                                              # from numpy library import array
+# splitting original image into red green and blue color
 
-# Assignment 1 Grayscale_image
-# (R+G+B)/3"
-input_image = imread("photo.jpeg")                                       # input image
-img1 = cv2.imread("photo.jpeg")
-gamma= 1.04
-r,g,b=input_image[: ,:,0 ],input_image[: ,: ,1], input_image[:,:,2]   # r,g,b of input image
-r_const,g_const,b_const=0.33,0.33,0.33                                # assign constant for r,b,g
-grayscale_image = r_const * r*gamma + g_const * g*gamma + b_const *b*gamma                # grayscale value
+from matplotlib.image import imread                          # importing matplotlib library for image reading
+import matplotlib.pyplot as plt                              # importing matplotlib library for plotting
+import numpy as np                                           # import numpy library for arrays
+import cv2                                                   # opencv files
+from PIL import Image                                        # for importing image
+from numpy import asarray                                    # from numpy library import array
 
-# Assignment 2 Binary image
-# using opencv converting rgb to binary"
-img = cv2.imread("photo.jpeg",2)                                        # read input image
-ret , binary_image=cv2.threshold(input_image,128,255,cv2.THRESH_BINARY)       # binary image
+img = cv2.imread("photo.jpeg")                               # reading the input
+img1 = cv2.resize(img,(500,800))                             # resizing the input image
 
-# Assignment 3 Addition of input and binary image
-Assignment_3 = input_image + binary_image                              # input + binary_image
-
-# Assignment 4 Addition of grayscale image and constant number 20
-Assignment_4= grayscale_image + 20.0                                   # grayscale_image + 20
-# images = [input_image,grayscale_image,binary_image,Assignment_3,Assignment_4]
-plt.show()
-
-cv2.imshow("INPUT IMAGE",img1)                                        # show the input image
-cv2.imshow("OUTPUT OF ASSIGNMENT 1",img)                              # output of assignment 1
-cv2.imshow("OUTPUT OF ASSIGNMENT 2",binary_image)                     # output of assignment 2
-cv2.imshow("OUTPUT OF ASSIGNMENT 3",Assignment_3)                     # output of assignment 3
-cv2.waitKey(0)                                                        # delay of 0 sec
-cv2.imshow("OUTPUT OF ASSIGNMENT 4",Assignment_4)                     # output of assignment 4
+cv2.imshow("original image",img1)                            # show/display the input image
+# cv2.waitKey(0)
+b,g,r = cv2.split(img1)                                      # splitting the original image
+zeros_ch = np.zeros(img1.shape[0:2],dtype="uint8")           # zero channel
+red = cv2.merge([zeros_ch,zeros_ch,r])                       # In red first 2 coordinates are zero
+green = cv2.merge([zeros_ch,g,zeros_ch])                     # In red first and last coordinates are zero
+blue = cv2.merge([b,zeros_ch,zeros_ch])                      # In red last 2 coordinates are zero
+cv2.imshow("Red image",red)                                  # show/display the Red color image
+cv2.imshow("Green image",green)                              # show/display the green color image
+cv2.imshow("Blue image",blue)                                # show/display the blue color image
 cv2.waitKey(0)
